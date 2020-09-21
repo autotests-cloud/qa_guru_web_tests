@@ -36,6 +36,7 @@ public class TestBase {
         attachScreenshot("Last screenshot");
         attachPageSource();
         attachAsText("Browser console logs", getBrowserConsoleLogs());
+        if (System.getProperty("video_storage_url") != null) attachVideo();
 
         closeWebDriver();
     }
