@@ -1,0 +1,77 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+}
+
+plugins {
+    id 'java-library'
+    id 'application'
+}
+
+group 'cloud.autotests'
+version '1.0'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+defaultTasks 'help'
+
+ext {
+    selenideVersion = "5.14.2"
+    junitVersion = "5.6.2"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation (
+            "com.codeborne:selenide:${selenideVersion}",
+            "ch.qos.logback:logback-classic:1.2.3",
+            "org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(Test) {
+    systemProperties = System.properties
+    if (project.hasProperty("web_threads")) {
+        systemProperties += [
+                'junit.jupiter.execution.parallel.enabled'                 : true,
+                'junit.jupiter.execution.parallel.mode.default'            : 'concurrent',
+                'junit.jupiter.execution.parallel.mode.classes.default'    : 'concurrent',
+                'junit.jupiter.execution.parallel.config.strategy'         : 'fixed',
+                'junit.jupiter.execution.parallel.config.fixed.parallelism': project.getProperty("web_threads").toInteger()
+        ]
+    }
+    testLogging {
+        lifecycle {
+            events "started", "skipped", "failed", "standard_error", "standard_out"
+            exceptionFormat "short"
+        }
+    }
+}
+
+task tests(type: Test) {
+    useJUnitPlatform {}
+}
+
+help {
+    doFirst {
+        println ""
+        println "************************************************************************ "
+        println "***                                                                  *** "
+        println "*** Welcome to                                                       *** "
+        println "*** https://github.com/autotests-cloud/qa_guru_web_tests             *** "
+        println "***                                                                  *** "
+        println "***                                                                  *** "
+        println "*** You can run tests by one of the following commands:              *** "
+        println "*** ./gradlew tests                                                  *** "
+        println "***                                                                  *** "
+        println "************************************************************************ "
+        println ""
+    }
+}
