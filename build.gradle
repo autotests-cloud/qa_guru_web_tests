@@ -7,6 +7,7 @@ buildscript {
 plugins {
     id 'java-library'
     id 'application'
+    id 'io.qameta.allure' version '2.8.1'
 }
 
 group 'cloud.autotests'
@@ -16,6 +17,7 @@ targetCompatibility = 1.8
 defaultTasks 'help'
 
 ext {
+    allureVersion = "2.13.5"
     selenideVersion = "5.14.2"
     junitVersion = "5.6.2"
 }
@@ -24,11 +26,22 @@ repositories {
     mavenCentral()
 }
 
+allure {
+    version = "${allureVersion}"
+    autoconfigure = true
+    aspectjweaver = true
+    useJUnit5 {
+        version = "${allureVersion}"
+    }
+}
+
 dependencies {
     testImplementation (
+            "org.aspectj:aspectjweaver:1.9.5",
             "com.codeborne:selenide:${selenideVersion}",
-            "org.aeonbits.owner:owner:1.0.12",
+            "io.qameta.allure:allure-selenide:${allureVersion}",
             "ch.qos.logback:logback-classic:1.2.3",
+            "org.aeonbits.owner:owner:1.0.12",
             "org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
 }
