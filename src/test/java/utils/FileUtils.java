@@ -3,6 +3,8 @@ package utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -37,7 +39,12 @@ public class FileUtils {
     }
 
     public static void copyFile(String source, String dest){
-        File sourceFile = new File(source);
+        File sourceFile = null;
+        try {
+            sourceFile = new File(new URI(source));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
         File destFile = new File(dest);
 
         try {
