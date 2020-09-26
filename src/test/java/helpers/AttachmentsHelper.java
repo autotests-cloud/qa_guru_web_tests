@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
+import static com.codeborne.selenide.Selenide.sleep;
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 import static utils.FileUtils.copyFile;
 
@@ -32,6 +33,7 @@ public class AttachmentsHelper {
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
     public static String attachVideo(String sessionId) {
+        sleep(1000);
         URL remoteVideoUrl = getVideoUrl(sessionId);
         String localVideoUrl = "videos/" + sessionId + ".mp4";
         copyFile(remoteVideoUrl, localVideoUrl);
