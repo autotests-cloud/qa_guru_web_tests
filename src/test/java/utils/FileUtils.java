@@ -3,8 +3,10 @@ package utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -39,16 +41,17 @@ public class FileUtils {
     }
 
     public static void copyFile(String source, String dest){
-        File sourceFile = null;
+        URL sourceUrl = null;
         try {
-            sourceFile = new File(new URI(source));
-        } catch (URISyntaxException e) {
+            sourceUrl = new URL(source);
+        } catch (MalformedURLException e) {
             e.printStackTrace();
+            return;
         }
-        File destFile = new File(dest);
 
+        File destFile = new File(dest);
         try {
-            org.apache.commons.io.FileUtils.copyFile(sourceFile, destFile);
+            org.apache.commons.io.FileUtils.copyURLToFile(sourceUrl, destFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
