@@ -36,9 +36,11 @@ public class TestBase {
         attachScreenshot("Last screenshot");
         attachPageSource();
         attachAsText("Browser console logs", getBrowserConsoleLogs());
+
+        String sessionId = getSessionId();
         closeWebDriver();
 
-        if (System.getProperty("video_storage_url") != null) attachVideo();
+        if (System.getProperty("video_storage_url") != null) attachVideo(sessionId);
 
     }
 

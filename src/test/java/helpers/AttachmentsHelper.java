@@ -31,8 +31,7 @@ public class AttachmentsHelper {
     }
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
-    public static String attachVideo() {
-        String sessionId = getSessionId();
+    public static String attachVideo(String sessionId) {
         URL remoteVideoUrl = getVideoUrl(sessionId);
         String localVideoUrl = "videos/" + sessionId + ".mp4";
         copyFile(remoteVideoUrl, localVideoUrl);
