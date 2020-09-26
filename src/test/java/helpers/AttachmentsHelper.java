@@ -39,7 +39,7 @@ public class AttachmentsHelper {
         copyFile(remoteVideoUrl, localVideoUrl);
 
         return "<html><body><video width='100%' height='100%' controls autoplay><source src='"
-                + localVideoUrl
+                + "https://jenkins.autotests.cloud/job/qa_guru_web_tests/ws/videos/485d022e95815dd922caa8ef4d0b0d6c.mp4"
                 + "' type='video/mp4'></video></body></html>";
     }
 
