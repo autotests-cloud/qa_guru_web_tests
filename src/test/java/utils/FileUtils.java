@@ -40,16 +40,9 @@ public class FileUtils {
         }
     }
 
-    public static void copyFile(String source, String dest){
-        URL sourceUrl = null;
-        try {
-            sourceUrl = new URL(source);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-            return;
-        }
-
+    public static void copyFile(URL sourceUrl, String dest){
         File destFile = new File(dest);
+
         try {
             org.apache.commons.io.FileUtils.copyURLToFile(sourceUrl, destFile);
         } catch (IOException e) {

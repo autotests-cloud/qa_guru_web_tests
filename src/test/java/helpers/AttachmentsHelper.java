@@ -33,7 +33,7 @@ public class AttachmentsHelper {
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
     public static String attachVideo() {
         String sessionId = getSessionId();
-        String remoteVideoUrl = getVideoUrl(sessionId);
+        URL remoteVideoUrl = getVideoUrl(sessionId);
         String localVideoUrl = "videos/" + sessionId + ".mp4";
         copyFile(remoteVideoUrl, localVideoUrl);
 
@@ -42,9 +42,9 @@ public class AttachmentsHelper {
                 + "' type='video/mp4'></video></body></html>";
     }
 
-    public static String getVideoUrl(String sessionId) {
+    public static URL getVideoUrl(String sessionId) {
         try {
-            return new URL(System.getProperty("video_storage_url") + sessionId + ".mp4") + "";
+            return new URL(System.getProperty("video_storage_url") + sessionId + ".mp4");
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
