@@ -10,6 +10,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
 import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
+import static utils.FileUtils.copyFile;
 
 
 public class AttachmentsHelper {
@@ -30,12 +31,13 @@ public class AttachmentsHelper {
     }
 
     @Attachment(value = "Video", type = "text/html", fileExtension = ".html")
-    public static String attachVideo() {
-        String videoUrl = getVideoUrl();
-        System.out.println(videoUrl);
+    public static String attachVideo(String sessionId) {
+        String remoteVideoUrl = getVideoUrl();
+        String localVideoUrl = "videos/" + sessionId + ".mp4";
+        copyFile(remoteVideoUrl, localVideoUrl);
 
         return "<html><body><video width='100%' height='100%' controls autoplay><source src='"
-                + videoUrl
+                + localVideoUrl
                 + "' type='video/mp4'></video></body></html>";
     }
 
